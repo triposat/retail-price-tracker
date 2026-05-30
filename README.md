@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Retail price tracker (Bright Data — free tier)
 
-## Getting Started
+A minimal, runnable Next.js app that tracks one product's price across Amazon and Walmart using
+Bright Data's [Datasets API](https://brightdata.com/products/web-scraper) — the **free-tier** path
+(dataset trigger → poll), no Pro plan and no `&pro=1` required. It's the runnable version of
+**Use case 2** from the brightdata-scrape Kiro Power article.
 
-First, run the development server:
+The dashboard fires both retailers in parallel, polls each snapshot to completion, and renders a
+"best price" banner across the two.
+
+## What's inside
+
+| File | Role |
+|------|------|
+| `src/scrapers/price-tracker.ts` | `triggerAndPoll` (Datasets API v3) + `normalise` + `fetchAllPrices` (parallel, per-retailer error isolation). |
+| `src/app/api/scrape-prices/route.ts` | API route; runs both retailers live. |
+| `src/app/page.tsx` | Dashboard: Amazon + Walmart cards + best-price banner. |
+
+## Run it (free tier — no Pro plan)
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+cp .env.example .env.local      # then paste your token
+npm run dev                     # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+`.env.local`:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+BRIGHTDATA_API_KEY=your-token-here   # free signup at brightdata.com/cp/setting/users
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+A live dataset scrape takes ~30–90s per retailer; the dashboard shows "Scraping live…" until both return.
 
-## Learn More
+## Notes
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Don't commit your token.** `.env*` is gitignored.
+- The product is the Sony WH-1000XM5; change the dataset IDs / URLs in `src/scrapers/price-tracker.ts` to track anything else.
+- Hardcoded product URLs can drift (a listing ID can migrate to a different product). For production, discover the canonical URL by keyword instead of hardcoding — see the article's "Scaling" section.
+- The free tier covers 5,000 requests/month. Want typed one-call tools (`web_data_amazon_product`) instead of trigger/poll? That's the Pro path (`&pro=1`) — covered in the article.
