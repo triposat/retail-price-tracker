@@ -3,7 +3,7 @@
 A minimal, runnable Next.js app that tracks one product's price across Amazon and Walmart using
 Bright Data's [Datasets API](https://brightdata.com/products/web-scraper) — the **free-tier** path
 (dataset trigger → poll), no Pro plan and no `&pro=1` required. It's the runnable version of
-**Use case 2** from the brightdata-scrape Kiro Power article.
+**Use case 1** from the brightdata-scrape Kiro Power article.
 
 The dashboard fires both retailers in parallel, polls each snapshot to completion, and renders a
 "best price" banner across the two.
