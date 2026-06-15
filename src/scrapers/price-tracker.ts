@@ -1,4 +1,4 @@
-// src/scrapers/sony_wh1000xm5.ts
+// src/scrapers/price-tracker.ts
 // Free-tier price tracking via Bright Data's Datasets API v3 (trigger -> poll).
 // No `&pro=1`, no Pro web_data_* tools — runs on the free 5,000-requests/month tier.
 const BASE = "https://api.brightdata.com/datasets/v3";
