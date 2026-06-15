@@ -2,7 +2,7 @@
 
 Tracks one product's price across Amazon and Walmart and shows the cheaper option on a dashboard. This is the runnable version of **Use case 1** from the [brightdata-scrape Kiro Power](https://github.com/brightdata/kiro-powers) guide.
 
-It uses Bright Data's [Datasets API](https://brightdata.com/products/web-scraper) on the **free tier**, so you don't need a paid plan.
+It uses Bright Data's [Datasets API](https://brightdata.com/products/web-scraper) on the **free tier**.
 
 ## Run it
 
@@ -16,5 +16,5 @@ Get a free token at [brightdata.com/cp/setting/users](https://brightdata.com/cp/
 
 ## Good to know
 
-- Your token stays local. `.env*` is gitignored, so it's never committed.
+- `.env*` is gitignored, so your token is never committed.
 - The tracked product is the Sony WH-1000XM5. To track something else, change the URLs in the scraper file under `src/scrapers/`.
